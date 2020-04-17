@@ -5,6 +5,7 @@
 //Prototypes
 int SampleNoReplacement(list items, int n);
 void DisjointSetUnion(elements, rank, int a, int b);
+int DisjointSetFind(elements, rank, a);
 
 
 //Globals
@@ -12,6 +13,10 @@ void DisjointSetUnion(elements, rank, int a, int b);
 //Main
 int main()
 {
+    //Variables:
+
+    //Code:
+
 
 }
 
@@ -29,6 +34,7 @@ int SampleNoReplacement(list items, int n)
     items[i] = items[n];                //Move last item into selected position
 
     return e;
+
 }
 
 //Algorthm 2 - Disjoint set union
@@ -66,8 +72,12 @@ int DisjointSetFind(elements, rank, a)
     //Variables:
 
     //Code:
+    if(elements[a] != a)                //Connect a directly to the top of intree
+    {
+        elements[a] = DisjointSetFind(elements[a]);
+    }
 
-
+    return elements[a];                 //Return top of intree
 }
 
 //Algorithm 4 - 

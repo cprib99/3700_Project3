@@ -83,20 +83,68 @@ int DisjointSetFind(elements, rank, a)
 }
 
 //Algorithm 4 - Generate a maze
-void GenerateMaze(nR, nC)
+void GenerateMaze(in nR, int nC)
 {
     //Variables:
+    int i, e;
 
     //Code:
+    i=0;
 
+    for(int r = 0; nR - 1; r++)
+    {
+        for(int c = 0; nC - 1; c++)
+        {
+            maze[r][c] = 63             //63 = 0b00111111; marks all six walls present
+        }
+    }
 
+    initialize disjoint set object "ds" with nR * nC elements;
+    initialize smlper object "sampler" with 3 * nR * nC elements;
+
+    i = 0;
+    while(i < ((nR * nC) - 1))
+    {
+        do
+        {
+
+            do
+            {
+                e = sampler.getSample()
+            }
+            while(e referecnces an exterior or nonessential wall);
+
+            (r1, c1, dir1) = decodeCell(e);
+            Set(r2, c2) to cell adjacent to (r1, c1) in given direction;
+            cell1 = encode(r1, c1, 0);
+            cell2 = encode(r2, c2, 0);
+
+        }
+        while(DisjointSetFind(cell1) == DisjointSetFind(cell2));
+
+        DisjointSetUnion(cell1, cell2);
+        i++;
+
+        Remove wall bewtween (r1, c1) and (r1, c2);
+
+    }
 
 }
 
-//Algorithm 5 - 
+//Algorithm 5 - Maze solver
 void FindPath(maze)
 {
+    //Variables:
+    int r, c, d, 
 
+    //Code:
+    S.push(encode(0, 0, 0));
+    Mark (0, 0) as visited;
+
+    while(true)
+    {
+        (r, c, d)
+    }
 
 }
 

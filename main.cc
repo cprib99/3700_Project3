@@ -143,7 +143,28 @@ void FindPath(maze)
 
     while(true)
     {
-        (r, c, d)
+        (r, c, d) = decode(S.peek());
+        if((r == nR - 1) && (c =0 nC - 1))
+        {
+            break;
+        }
+
+        if(d == 6)
+        {
+            Mark(r, c) as a dead end;
+            S.pop();
+        }
+        else
+        {
+            Let (r', c') be the next cell in the direction d;;
+            Replace encode(r, c, d) with encode(r, c, d + 1) on top of stack;
+
+            if(no wall exists in direction d && (r', c') is not marked as visited)
+            {
+                S.push(encode(r', c', 0));
+                Mark(r', c') as visited;
+            }
+        }
     }
 
 }

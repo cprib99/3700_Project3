@@ -6,6 +6,8 @@
 int SampleNoReplacement(list items, int n);
 void DisjointSetUnion(elements, rank, int a, int b);
 int DisjointSetFind(elements, rank, a);
+void GenerateMaze(nR, nC);
+void FindPath(maze);
 
 
 //Globals
@@ -80,5 +82,21 @@ int DisjointSetFind(elements, rank, a)
     return elements[a];                 //Return top of intree
 }
 
-//Algorithm 4 - 
+//Algorithm 4 - Generate a maze
+void GenerateMaze(nR, nC)
+{
+    //Variables:
+
+    //Code:
+
+
+
+}
+
+//Algorithm 5 - 
+void FindPath(maze)
+{
+
+
+}
 

@@ -7,7 +7,7 @@
 #include"Sampler.h"
 #include"stack.h"
 
-using namespace
+using namespace std;
 
 //Prototypes
 int SampleNoReplacement(list items, int n);

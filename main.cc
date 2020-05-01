@@ -16,8 +16,16 @@ void FindPath(maze);
 int main()
 {
     //Variables:
+    int n, columns, rows, e;
+
 
     //Code:
+    //Read in here
+
+    n = columns * rows;
+    int items[n];
+    e = SampleNoReplacement(items, n);
+
 
 
 }
@@ -47,7 +55,7 @@ void DisjointSetUnion(elements, rank, int a, int b)
     //Code:
     a = DisjointSetFind(a);
     b = DisjointSetFind(b);
-    
+
     if(a != b)                          //Only union if a and b are in different sets
     {
         if(rank[a] < rank[b])           //Set with lower rank merged into set with larger rank
@@ -64,7 +72,7 @@ void DisjointSetUnion(elements, rank, int a, int b)
             elements[b] = a;
         }
     }
-    
+
 }
 
 
@@ -135,7 +143,7 @@ void GenerateMaze(in nR, int nC)
 void FindPath(maze)
 {
     //Variables:
-    int r, c, d, 
+    int r, c, d,
 
     //Code:
     S.push(encode(0, 0, 0));

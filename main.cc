@@ -1,6 +1,13 @@
 //Jordan Brown
 //Cam Pribulsky
 //Project 3 - Hex Pathfinder
+#include<iostream>
+#include"DisjointSet.h"
+#include"hexpathfinder.h"
+#include"Sampler.h"
+#include"stack.h"
+
+using namespace
 
 //Prototypes
 int SampleNoReplacement(list items, int n);

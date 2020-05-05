@@ -1,18 +1,15 @@
 //Jordan Brown
 //Cam Pribulsky
 //Project 3 - Hex Pathfinder
-#include<iostream>
-#include"DisjointSet.h"
-#include"hexpathfinder.h"
-#include"Sampler.h"
-#include"stack.h"
+#include <iostream>
+#include "DisjointSet.h"
+#include "hexpathfinder.h"
+#include "Sampler.h"
+#include "stack.h"
 
 using namespace std;
 
 //Prototypes
-int SampleNoReplacement(list items, int n);
-void DisjointSetUnion(elements, rank, int a, int b);
-int DisjointSetFind(elements, rank, a);
 void GenerateMaze(nR, nC);
 void FindPath(maze);
 
@@ -25,9 +22,14 @@ int main()
     //Variables:
     int n, columns, rows, e;
 
+    //read data using cin
+    for (int i=0; i<2; i++)
+      cin >> columns;
+    for (int i=2; i<3; i++)
+      //do nothing
+    for (int i=3; i<5; i++)
+      cin >> rows;
 
-    //Code:
-    //Read in here
 
     n = columns * rows;
     int items[n];
@@ -37,65 +39,8 @@ int main()
 
 }
 
-
-//Algorithm 1 - Sampling without replacement
-int SampleNoReplacement(list items, int n)
-{
-    //Variables:
-    int i, e;
-
-    //Code:
-    i = Rand mod n;                     //select a random position in the list
-    e = items[i];                       //Remember the selected item
-    n = n-1;                            //Decrement n
-    items[i] = items[n];                //Move last item into selected position
-
-    return e;
-
-}
-
-//Algorthm 2 - Disjoint set union
-void DisjointSetUnion(elements, rank, int a, int b)
-{
-    //Variables:
-
-    //Code:
-    a = DisjointSetFind(a);
-    b = DisjointSetFind(b);
-
-    if(a != b)                          //Only union if a and b are in different sets
-    {
-        if(rank[a] < rank[b])           //Set with lower rank merged into set with larger rank
-        {
-            elements[a] = b;
-        }
-        else
-        {
-            if(rank[a] == rank[b])      //In case of tie, increment one set's rank
-            {
-                rank[a] = rank[a] + 1;
-            }
-
-            elements[b] = a;
-        }
-    }
-
-}
-
-
-//Algorithm 3 - Disjoint set find
-int DisjointSetFind(elements, rank, a)
-{
-    //Variables:
-
-    //Code:
-    if(elements[a] != a)                //Connect a directly to the top of intree
-    {
-        elements[a] = DisjointSetFind(elements[a]);
-    }
-
-    return elements[a];                 //Return top of intree
-}
+//Alg 1 is in Sampler header file
+//Algs 2 and 3 are in DisjointSet header file
 
 //Algorithm 4 - Generate a maze
 void GenerateMaze(in nR, int nC)
@@ -135,9 +80,9 @@ void GenerateMaze(in nR, int nC)
             cell2 = encode(r2, c2, 0);
 
         }
-        while(DisjointSetFind(cell1) == DisjointSetFind(cell2));
+        while(find(cell1) == find(cell2));
 
-        DisjointSetUnion(cell1, cell2);
+        join(cell1, cell2);
         i++;
 
         Remove wall bewtween (r1, c1) and (r1, c2);
@@ -183,4 +128,3 @@ void FindPath(maze)
     }
 
 }
-

@@ -13,7 +13,7 @@ public:
 	Sampler(int n)
 	{
 		for(int i = 0; i<=n; i++)
-			array[i] = i;
+			items[i] = i;
 	}
 	~Sampler(void)
 	{

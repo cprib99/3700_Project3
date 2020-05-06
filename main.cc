@@ -12,10 +12,14 @@ using namespace std;
 //Prototypes
 void GenerateMaze(nR, nC);
 void FindPath(maze);
+void encode(cell);
+void decode(cell);
 
 
 //Globals
 uint8_t maze;
+stack S;
+int nR, nC;
 
 //Main
 int main()
@@ -25,30 +29,32 @@ int main()
 
     //read data using cin
     for (int i=0; i<2; i++)
-      cin >> columns;
+      cin >> nC;
     for (int i=2; i<3; i++)
       //do nothing
     for (int i=3; i<5; i++)
-      cin >> rows;
+      cin >> nR;
 
-
-    n = columns * rows;
+    // I don't think we need this below
+    /*
+    n = nC * nR;
     int items[n];
     e = SampleNoReplacement(items, n);
+    */
 
-    GenerateMaze(rows, columns);
+    GenerateMaze(nR, nC);
     FindPath(maze);
-    printMaze(maze, rows, columns);
+    printMaze(maze, nR, nC);
 }
 
 //Alg 1 is in Sampler header file
 //Algs 2 and 3 are in DisjointSet header file
 
 //Algorithm 4 - Generate a maze
-void GenerateMaze(in nR, int nC)
+void GenerateMaze(int nR, int nC)
 {
     //Variables:
-    int i, e;
+    int i, e, objNum, sampObjNum;
 
     //Code:
     i=0;
@@ -61,8 +67,15 @@ void GenerateMaze(in nR, int nC)
         }
     }
 
-    initialize disjoint set object "ds" with nR * nC elements;
-    initialize smlper object "sampler" with 3 * nR * nC elements;
+    //number of objects for classes below
+    objNum = nR * nC;
+    sampObjNum = 3 * objNum;
+
+    //initialize disjoint set object "ds" with nR * nC elements;
+    DisjointSet ds(objNum);
+
+    //initialize samlper object "sampler" with 3 * nR * nC elements;
+    Sampler sampler(sampObjNum);
 
     i = 0;
     while(i < ((nR * nC) - 1))
@@ -74,10 +87,10 @@ void GenerateMaze(in nR, int nC)
             {
                 e = sampler.getSample()
             }
-            while(e referecnces an exterior or nonessential wall);
+            while(//e referecnces an exterior or nonessential wall);
 
             (r1, c1, dir1) = decodeCell(e);
-            Set(r2, c2) to cell adjacent to (r1, c1) in given direction;
+            //Set(r2, c2) to cell adjacent to (r1, c1) in given direction;
             cell1 = encode(r1, c1, 0);
             cell2 = encode(r2, c2, 0);
 
@@ -101,7 +114,7 @@ void FindPath(maze)
 
     //Code:
     S.push(encode(0, 0, 0));
-    Mark (0, 0) as visited;
+    //Mark (0, 0) as visited;
 
     while(true)
     {
@@ -113,20 +126,28 @@ void FindPath(maze)
 
         if(d == 6)
         {
-            Mark(r, c) as a dead end;
+            //Mark(r, c) as a dead end;
             S.pop();
         }
         else
         {
-            Let (r', c') be the next cell in the direction d;;
-            Replace encode(r, c, d) with encode(r, c, d + 1) on top of stack;
+            //Let (r', c') be the next cell in the direction d;;
+            //Replace encode(r, c, d) with encode(r, c, d + 1) on top of stack;
 
-            if(no wall exists in direction d && (r', c') is not marked as visited)
+            if(//no wall exists in direction d && (r', c') is not marked as visited)
             {
                 S.push(encode(r', c', 0));
-                Mark(r', c') as visited;
+                //Mark(r', c') as visited;
             }
         }
     }
 
 }
+
+int encode(int r, int c, int d)
+{
+  int e = c + nC * (r + nR * d);
+  return e;
+}
+
+int decode()

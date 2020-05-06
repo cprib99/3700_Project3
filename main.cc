@@ -18,7 +18,12 @@ void decode(cell);
 
 //Globals
 uint8_t maze;
-stack S;
+/*maze bit interface:
+bits 0-5 are walls, starting at the "bottom" and rotating clockwise
+bit 6 is the "visited" bit
+bit 7 is the "dead end" bit
+*/
+
 int nR, nC;
 const int32_t
   dC[] = {0,1,1,0,-1,-1},
@@ -86,25 +91,17 @@ void GenerateMaze(int nR, int nC)
               (r1, c1, dir1) = decodeCell(e);
 
               //Set(r2, c2) to cell adjacent to (r1, c1) in given direction
-              dR = (c1 + 1) ? dRodd : dReven;
-              for (int i=0; i<6; i++)
-              {
-                neighborR = r + dR[dir1];
-                neighborC = c + dC[dir1];
-              }
-
-
-
-              cell1 = encode(r1, c1, 0);
-              cell2 = encode(r2, c2, 0);
+              maze[r1][c1] = encode(r1, c1, 0);
+              maze[r2][c2] = encode(r2, c2, 0);
         }
-        while(find(cell1) == find(cell2));
+        while(find(c1) == find(c2));
 
-        join(cell1, cell2);
+        join(c1, c2);
         i++;
 
-        //Remove wall bewtween (r1, c1) and (r1, c2);
-        maze[r1][c1]
+        //Remove wall between (r1, c1) and (r1, c2);
+        maze[r1][c1] = (maze[r1][c1] & ~(1 << (d-1)));
+        maze[r2][c2] = (maze[r2][c2] & ~(1 << (d-1)));
     }
 
 }
@@ -113,7 +110,8 @@ void GenerateMaze(int nR, int nC)
 void FindPath(maze)
 {
     //Variables:
-    int r, c, d,
+    int r, c, d;
+    Stack<int32> S;
 
     //Code:
     S.push(encode(0, 0, 0));
@@ -130,15 +128,25 @@ void FindPath(maze)
 
         if(d == 6)
         {
-            //Mark(r, c) as a dead end;
+            maze[r][c] = //some bitwise #
             S.pop();
         }
         else
         {
-            //Let (r', c') be the next cell in the direction d;;
-            //Replace encode(r, c, d) with encode(r, c, d + 1) on top of stack;
+            //Let (neighborR, neighborC) be the next cell in the direction d
+            dR = (c1 + 1) ? dRodd : dReven;
+            for (int i=0; i<6; i++)
+            {
+              neighborR = r + dR[dir1];
+              neighborC = c + dC[dir1];
+            }
+            //Replace encode(r, c, d) with encode(r, c, d + 1) on top of stack
+            S.pop();
+            S.push(encode(r, c, d+1))
 
-            if(//no wall exists in direction d && (r', c') is not marked as visited)
+
+            //if no wall exists in direction d && (r', c') is not marked as visited
+            if()
             {
                 S.push(encode(r', c', 0));
                 //Mark(r', c') as visited;

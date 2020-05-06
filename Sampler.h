@@ -8,7 +8,7 @@
 class Sampler
 {
 public:
-	Sampler(uint32_t n);
+	explicit Sampler(uint32_t n);
 	~Sampler();
 
 	uint32_t getSample();

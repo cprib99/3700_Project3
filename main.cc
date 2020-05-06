@@ -4,7 +4,8 @@
 #include <iostream>
 #include "DisjointSet.h"
 #include "hexpathfinder.h"
-#include "Sampler.h"
+#include "hexoutput.cpp"
+#include "Sampler.cpp"
 #include "stack.h"
 
 using namespace std;
@@ -18,7 +19,6 @@ bit 6 is the "visited" bit
 bit 7 is the "dead end" bit
 */
 
-int nR, nC;
 const int32_t
   dC[] = {0,1,1,0,-1,-1},
   dReven[] = {-1,-1,0,1,0,-1},
@@ -38,9 +38,11 @@ int main(int argc, int *argv[])
       std::cout << "Usage: " << argv[0] << "nRows nColumns" << std::endl;
     }
 
+    int32_t nR, nC;
+
     //read data using cin
-    nR = atoi(nptr:argv[1]);
-    nC = atoi(nptr:argv[2]);
+    nR = atoi(argv[1]);
+    nC = atoi(argv[2]);
 
     GenerateMaze(nR, nC);
     FindPath(maze);
@@ -54,10 +56,7 @@ int main(int argc, int *argv[])
 void GenerateMaze(int nR, int nC)
 {
     //Variables:
-    int i, e, objNum, sampObjNum;
-
-    //Code:
-    i=0;
+    int i, e, objNum, sampObjNum, r1, r2, c1, c2, d;
 
     for(int r = 0; nR - 1; r++)
     {
@@ -88,7 +87,7 @@ void GenerateMaze(int nR, int nC)
                 e = sampler.getSample()
             }
             while(//e referecnces an exterior or nonessential wall)
-              (r1, c1, dir1) = decodeCell(e);
+              (r1, c1, d) = decodeCell(e);
 
               //Set(r2, c2) to cell adjacent to (r1, c1) in given direction
               maze[r1][c1] = encode(r1, c1, 0);
@@ -111,18 +110,18 @@ void FindPath(maze)
 {
     //Variables:
 
-    int r, c, d;
+    int r, c, d, r1, c1;
     Stack<int32> S;
     int r, c, d,
 
 
     //Code:
     S.push(encode(0, 0, 0));
-    //Mark (0, 0) as visited;
+    //turn off 6th bit to mark visit
+    maze[0][0] = (maze[0][0] & ~(1 << (6-1)));
 
     while(true)
     {
-        //fix this crap below
         (r, c, d) = decode(S.peek());
         if((r == nR - 1) && (c =0 nC - 1))
         {
@@ -131,7 +130,8 @@ void FindPath(maze)
 
         if(d == 6)
         {
-            maze[r][c] = //some bitwise #
+            //mark cell as dead end
+            maze[r][c] = (maze[r][c] & ~(1 << (7-1)));
             S.pop();
         }
         else
@@ -145,10 +145,9 @@ void FindPath(maze)
             }
             //Replace encode(r, c, d) with encode(r, c, d + 1) on top of stack
             S.pop();
-            S.push(encode(r, c, d+1))
+            S.push(encode(r, c, d+1));
 
-
-            //if no wall exists in direction d && (r', c') is not marked as visited
+            //if no wall exists in direction d && (neighborR, neighborC) is not marked as visited
             if()
             {
                 S.push(encode(neighborR, neighborC, 0));

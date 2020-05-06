@@ -17,6 +17,7 @@ void decode(cell);
 
 
 //Globals
+
 uint8_t maze;
 /*maze bit interface:
 bits 0-5 are walls, starting at the "bottom" and rotating clockwise
@@ -37,6 +38,71 @@ int main(int argc, int *argv[])
     if (argc != 3){
       std::cout << "Usage: " << argv[0] << "nRows nColumns" << std::endl;
     }
+=======
+
+//Main
+int main()
+{
+    //Variables:
+    int n, columns, rows, e;
+
+
+    //Code:
+    //Read in here
+
+    n = columns * rows;
+    int items[n];
+    e = SampleNoReplacement(items, n);
+
+
+
+}
+
+
+//Algorithm 1 - Sampling without replacement
+int SampleNoReplacement(list items, int n)
+{
+    //Variables:
+    int i, e;
+
+    //Code:
+    i = Rand mod n;                     //select a random position in the list
+    e = items[i];                       //Remember the selected item
+    n = n-1;                            //Decrement n
+    items[i] = items[n];                //Move last item into selected position
+
+    return e;
+
+}
+
+//Algorthm 2 - Disjoint set union
+void DisjointSetUnion(elements, rank, int a, int b)
+{
+    //Variables:
+
+    //Code:
+    a = DisjointSetFind(a);
+    b = DisjointSetFind(b);
+
+    if(a != b)                          //Only union if a and b are in different sets
+    {
+        if(rank[a] < rank[b])           //Set with lower rank merged into set with larger rank
+        {
+            elements[a] = b;
+        }
+        else
+        {
+            if(rank[a] == rank[b])      //In case of tie, increment one set's rank
+            {
+                rank[a] = rank[a] + 1;
+            }
+
+            elements[b] = a;
+        }
+    }
+
+}
+
 
     //read data using cin
     nR = atoi(nptr:argv[1]);
@@ -110,8 +176,12 @@ void GenerateMaze(int nR, int nC)
 void FindPath(maze)
 {
     //Variables:
+
     int r, c, d;
     Stack<int32> S;
+=======
+    int r, c, d,
+
 
     //Code:
     S.push(encode(0, 0, 0));

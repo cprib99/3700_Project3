@@ -38,7 +38,6 @@ int main(int argc, int *argv[])
     if (argc != 3){
       std::cout << "Usage: " << argv[0] << "nRows nColumns" << std::endl;
     }
-=======
 
 //Main
 int main()
@@ -179,7 +178,6 @@ void FindPath(maze)
 
     int r, c, d;
     Stack<int32> S;
-=======
     int r, c, d,
 
 

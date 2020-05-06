@@ -1,40 +1,28 @@
-#include <cstdint>
-#include <iostream>
+#ifndef #SAMPLER_H
+#define SAMPLER_H
 
-#ifndef _SAMPLER_H
-#define _SAMPLER_H
+
+#include <cstdint>
+#include <random>
 
 class Sampler
 {
-	int *array;
-
 public:
-	//Constructor & Destructor num/den
-	Sampler(int n)
-	{
-		for(int i = 0; i<=n; i++)
-			items[i] = i;
-	}
-	~Sampler(void)
-	{
-		//add destructor
-	}
+	Sampler(uint32_t n);
+	~Sampler();
 
-	//Algorithm 1 - Sampling without replacement
-	int getSample(list items, int n)
-	{
-	    //Variables:
-	    int i, e;
+	uint32_t getSample();
 
-	    //Code:
-	    i = Rand mod n;                     //select a random position in the list
-	    e = items[i];                       //Remember the selected item
-	    n = n-1;                            //Decrement n
-	    items[i] = items[n];                //Move last item into selected position
+private:
+	uint32_t
+		*items,
+		nItems;
 
-	    return e;
-	}
+	std::random_device
+		*rd;
+	std::mt19937
+		*mt;
+
 };
 
-
-#endif
+#endif //SAMPLER_H

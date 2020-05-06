@@ -21,7 +21,8 @@ public:
   //destructor
   ~DisjointSet():
   {
-
+      delete[] rank;
+      delete[] element;
   }
 
   //function to place data into elements & rank array

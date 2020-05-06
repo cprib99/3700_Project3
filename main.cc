@@ -14,7 +14,7 @@ using namespace std;
 
 uint8_t maze;
 /*maze bit interface:
-bits 0-5 are walls, starting at the "bottom" and rotating clockwise
+bits 0-5 are walls
 bit 6 is the "visited" bit
 bit 7 is the "dead end" bit
 */
@@ -49,14 +49,13 @@ int main(int argc, int *argv[])
     printMaze(maze, nR, nC);
 }
 
-//Alg 1 is in Sampler header file
+//Alg 1 is in Sampler.cpp
 //Algs 2 and 3 are in DisjointSet header file
 
 //Algorithm 4 - Generate a maze
 void GenerateMaze(int nR, int nC)
 {
-    //Variables:
-    int i, e, objNum, sampObjNum, r1, r2, c1, c2, d;
+    int i, e, objNum, sampObjNum, r1, r2, c1, c2, dir1;
 
     for(int r = 0; nR - 1; r++)
     {
@@ -87,9 +86,16 @@ void GenerateMaze(int nR, int nC)
                 e = sampler.getSample()
             }
             while(//e referecnces an exterior or nonessential wall)
-              (r1, c1, d) = decodeCell(e);
+              (r1, c1, dir1) = decodeCell(e);
 
               //Set(r2, c2) to cell adjacent to (r1, c1) in given direction
+              dR = (c1 + 1) ? dRodd : dReven;
+              for (int i=0; i<6; i++)
+              {
+                r2 = r + dR[dir1];
+                c2 = c + dC[dir1];
+              }
+
               maze[r1][c1] = encode(r1, c1, 0);
               maze[r2][c2] = encode(r2, c2, 0);
         }
@@ -108,15 +114,11 @@ void GenerateMaze(int nR, int nC)
 //Algorithm 5 - Maze solver
 void FindPath(maze)
 {
-    //Variables:
-
-    int r, c, d, r1, c1;
+    int r, c, dir1, r1, c1;
     Stack<int32> S;
-    int r, c, d,
 
-
-    //Code:
     S.push(encode(0, 0, 0));
+
     //turn off 6th bit to mark visit
     maze[0][0] = (maze[0][0] & ~(1 << (6-1)));
 
@@ -145,13 +147,13 @@ void FindPath(maze)
             }
             //Replace encode(r, c, d) with encode(r, c, d + 1) on top of stack
             S.pop();
-            S.push(encode(r, c, d+1));
+            S.push(encode(r, c, dir1+1));
 
             //if no wall exists in direction d && (neighborR, neighborC) is not marked as visited
             if()
             {
                 S.push(encode(neighborR, neighborC, 0));
-                //Mark(r', c') as visited;
+                maze[neighborR][neighborC] = (maze[neighborR][neighborC] & ~(1 << (6-1)));
             }
         }
     }

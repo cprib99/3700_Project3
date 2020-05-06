@@ -15,6 +15,7 @@ void FindPath(maze);
 
 
 //Globals
+uint8_t maze;
 
 //Main
 int main()
@@ -35,8 +36,9 @@ int main()
     int items[n];
     e = SampleNoReplacement(items, n);
 
-
-
+    GenerateMaze(rows, columns);
+    FindPath(maze);
+    printMaze(maze, rows, columns);
 }
 
 //Alg 1 is in Sampler header file

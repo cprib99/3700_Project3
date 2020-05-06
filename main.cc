@@ -9,13 +9,6 @@
 
 using namespace std;
 
-//Prototypes
-void GenerateMaze(nR, nC);
-void FindPath(maze);
-void encode(cell);
-void decode(cell);
-
-
 //Globals
 
 uint8_t maze;
@@ -33,75 +26,17 @@ const int32_t
 int32_t
   *dR;
 
+//Prototypes
+void GenerateMaze(int nR,int nC);
+void FindPath(uint8_t maze);
+int encode(int32_t r, int32_t c, int32_t d, int32_t nR, int32_t nC);
+void decode(int32_t e,int32_t nR, int32_t nC, int32_t &r, int32_t &c, int32_t &d);
+
 int main(int argc, int *argv[])
 {
     if (argc != 3){
       std::cout << "Usage: " << argv[0] << "nRows nColumns" << std::endl;
     }
-
-//Main
-int main()
-{
-    //Variables:
-    int n, columns, rows, e;
-
-
-    //Code:
-    //Read in here
-
-    n = columns * rows;
-    int items[n];
-    e = SampleNoReplacement(items, n);
-
-
-
-}
-
-
-//Algorithm 1 - Sampling without replacement
-int SampleNoReplacement(list items, int n)
-{
-    //Variables:
-    int i, e;
-
-    //Code:
-    i = Rand mod n;                     //select a random position in the list
-    e = items[i];                       //Remember the selected item
-    n = n-1;                            //Decrement n
-    items[i] = items[n];                //Move last item into selected position
-
-    return e;
-
-}
-
-//Algorthm 2 - Disjoint set union
-void DisjointSetUnion(elements, rank, int a, int b)
-{
-    //Variables:
-
-    //Code:
-    a = DisjointSetFind(a);
-    b = DisjointSetFind(b);
-
-    if(a != b)                          //Only union if a and b are in different sets
-    {
-        if(rank[a] < rank[b])           //Set with lower rank merged into set with larger rank
-        {
-            elements[a] = b;
-        }
-        else
-        {
-            if(rank[a] == rank[b])      //In case of tie, increment one set's rank
-            {
-                rank[a] = rank[a] + 1;
-            }
-
-            elements[b] = a;
-        }
-    }
-
-}
-
 
     //read data using cin
     nR = atoi(nptr:argv[1]);
@@ -216,7 +151,7 @@ void FindPath(maze)
             //if no wall exists in direction d && (r', c') is not marked as visited
             if()
             {
-                S.push(encode(r', c', 0));
+                S.push(encode(neighborR, neighborC, 0));
                 //Mark(r', c') as visited;
             }
         }
